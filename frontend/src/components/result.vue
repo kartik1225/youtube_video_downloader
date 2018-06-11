@@ -206,15 +206,21 @@
 
 			  <v-layout justify-space-around>
 				  <div v-ripple>
-				  	<a href="whatsapp://send?text=Hello%20World!"><img style="width: 50px;" src='../../static/whatsapp.png'/></a>
+				  	<a :href="`whatsapp://send?text=hey%20i%20found%20this%20awosome%20website%20%2C%20*w3saver.com*%20from%20here%20you%20can%20download%20any%20youtube%20videos%20and%20audio%20in%20mp3%20for%20free.%20check%20this%20one%20out%20!`"><img style="width: 50px;" src='../../static/whatsapp.png'/></a>
 				  </div>
 
 				  <div v-ripple role='button'>
-				 	 <img style="width: 55px;" src='../../static/fb.png'/>
+				  	<a href="https://www.facebook.com/sharer/sharer.php?u=https://w3saver.com/" target="_blank">
+				 	 <img style="width: 55px;" src='../../static/fb.png'/></a>
 				  </div>
+				  
 
-				  <div>
-				  	<img style="width: 45px;margin-top: 5px;" src='../../static/tw.png'/>
+				  <div v-ripple role='button'>
+				  	<a class="twitter-share-button"
+					  href="https://twitter.com/intent/tweet?text=hey%20i%20found%20this%20awosome%20website%20%2C%20w3saver.com%20from%20here%20you%20can%20download%20any%20youtube%20videos%20and%20audio%20in%20mp3%20for%20free.%20check%20this%20one%20out%20!"
+					  data-size="large">
+				  	  <img style="width: 45px;margin-top: 5px;" src='../../static/tw.png'/>
+					</a>
 				  </div>
 			  </v-layout>
 
@@ -223,7 +229,7 @@
 			  <v-layout justify-space-between>
 				  <v-btn flat class='black--text' @click='coppyLink("Thank you so much for your support <3")' >donate &nbsp<v-icon small>account_balance_wallet</v-icon></v-btn>
 			  <v-btn flat class='red--text' @click='$router.push(`/bug`)' >report bug</v-btn>
-				  <v-btn flat>close</v-btn>
+				  <v-btn flat @click='feedback = false'>close</v-btn>
 			  </v-layout>
 		</v-card>
 	</v-dialog>
