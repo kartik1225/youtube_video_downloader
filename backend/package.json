@@ -1,0 +1,18 @@
+{
+  "name": "w3_server",
+  "version": "1.0.0",
+  "description": "w3 saver server",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "kartik",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "download": "^6.2.5",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "ytdl-core": "^0.18.7"
+  }
+}
