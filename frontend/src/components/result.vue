@@ -110,7 +110,7 @@
 							<!-- download link of mp3 -->
 							<v-card class='blue-grey darken-3'>
 								<v-container>
-										<h3 class="text-xs-center white--text">audio in <br> <span class="display-4">m4a</span></h3>
+										<h3 class="text-xs-center white--text">audio in <br> <span class="display-4">mp3</span></h3>
 								</v-container>
 								<v-divider dark></v-divider>
 								<v-card-actions>
@@ -234,6 +234,28 @@
 		</v-card>
 	</v-dialog>
 
+	<!-- mp3 being convertrd -->
+	<!-- for server errors -->
+	<v-dialog v-model="audioProcess" max-width="400px">
+	  <v-card>
+	  	<v-container class='amber'>
+	  		<p class="title" style="margin: auto;">Please wait</p>
+	  	</v-container>
+	  	  <v-progress-linear  style='margin:auto; border-radius: 25px; height: 2px; position: absolute;' :indeterminate="true"></v-progress-linear>
+	  	<v-container class='grey lighten-4'>
+	  	  <p class="subheading" style="margin: auto;">Video is being converted to mp3...</p>
+
+	  	  <v-layout row wrap >
+	  	    <v-icon style='font-size: 40px; padding: 10px;'>movie</v-icon>
+	  	    <v-icon style='font-size: 40px; padding: 10px;'>arrow_forward</v-icon>
+	  	    <v-icon style='font-size: 40px; padding: 10px;'>audiotrack</v-icon>
+	  	  </v-layout>
+
+	  	  <p class="subheading grey--text body-1" style="margin: auto;">it will may take about 20 sec to 1 min depending on video length.</p>
+	  	</v-container>
+	  </v-card>
+	</v-dialog>
+
 	<!-- for server errors -->
 	<v-dialog v-model="serverError" max-width="400px">
 	  <v-card>
@@ -304,8 +326,25 @@ const copyToClipboard = str => {
 				coppySnak:false,
 				snacText:'',
 				feedback:false,
-				serverError:false
+				serverError:false,
+				audioProcess:false,
+				socket:null
 			}
+		},
+		sockets:{
+		    connect: function(){
+		      console.log('socket connected')
+		    },
+		    socketID: function(id){
+		    	this.socket = id;
+		    	console.log('socketId',id);
+		    },
+		    download_started: function(val){
+		    	this.audioProcess = false;
+			    setTimeout(()=>{
+			    	this.feedback = true;
+			    },1000)
+		    }
 		},
 		watch:{
 			q(i){
@@ -380,8 +419,6 @@ const copyToClipboard = str => {
 				}
 			},
 			fetchData(i){
-
-
 				this.qshow = false;
 				this.content = false;
 				this.loading = true;
@@ -454,11 +491,9 @@ const copyToClipboard = str => {
 			},
 			getaudio(){
 
-				setTimeout(()=>{
-					this.feedback = true;
-				},10000)
+				this.audioProcess = true;
 
-				window.location = `${this.$store.state.server}get/audio/${this.$route.params.id}`
+				window.location = `${this.$store.state.server}get/audio/${this.$route.params.id}/${this.socket}`
 
 			}
 		}
